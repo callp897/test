@@ -9,14 +9,18 @@ require('dotenv').config()
 async function automateBrowser(login, password) {
     const proxyUser = 'egzdkhbl'; // Proxy username
     const proxyPass = 'lebpugkqbhy7'; // Proxy password
-    const proxy = '173.211.0.148:6641';
+    const proxy = '198.23.239.134:6540';
     const originalUrl = `http://${proxyUser}:${proxyPass}@${proxy}`;
     // Return anonymized version of original URL; it looks like <http://127.0.0.1:45678>
     const newUrl = await proxyChain.anonymizeProxy(originalUrl);
 
-    const browser = await puppeteer.launch({ headless: false, defaultViewport: null,args: [
+    const browser = await puppeteer.launch({ headless: true, defaultViewport: null,args: [
             `--proxy-server=${newUrl}`,
-            '--ignore-certificate-errors' // Useful for HTTPS sites
+            '--ignore-certificate-errors', // Useful for HTTPS sites
+            "--disable-setuid-sandbox",
+            "--no-sandbox",
+            "--single-process",
+            "--no-zygote",
         ],
         executablePath:
             process.env.NODE_ENV === "production"
