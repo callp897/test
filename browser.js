@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const fsSync = require("fs");
 const fs = require('fs').promises;
-const filePath = './cache.json';
+const filePath = './data/cache.json';
 const jsonData = require(filePath);
 const proxyChain = require('proxy-chain')
 require('dotenv').config()
@@ -171,7 +171,7 @@ function delay(timeout) {
 }
 
 async function checkJson() {
-    const filePath = './cache.json';
+    const filePath = './data/cache.json';
 
     try {
         // Read the file asynchronously
