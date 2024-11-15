@@ -6,9 +6,9 @@ const fs = require('fs').promises;
 const TelegramBot = require('node-telegram-bot-api');
 // Read the JSON file
 const token = '6996850800:AAGua3pvelxx7alcM_aPiZWUP-3-UnvHw4M';
-const filePath = './data/cache.json';
+const filePath = '/tmp/cache.json';
 const jsonData = require(filePath);
-const typeFilePath = './data/type.json';
+const typeFilePath = '/tmp/type.json';
 const typeJsonData = require(typeFilePath);
 // const instanceFilePath = './instance.json';
 // const instanceJsonData = require(instanceFilePath);
@@ -70,7 +70,7 @@ app.listen(port, () => {
 });
 
 async function checkJson() {
-    const filePath = './data/cache.json';
+    const filePath = '/tmp/cache.json';
 
     try {
         // Read the file asynchronously
@@ -91,7 +91,7 @@ async function checkJson() {
 }
 
 async function checkValue(key) {
-    const filePath = './data/type.json';
+    const filePath = '/tmp/type.json';
     const startTime = Date.now();
     while (true) {
         try {
@@ -128,7 +128,7 @@ async function checkValue(key) {
 }
 
 async function checkValue2(key) {
-    const filePath = './data/type.json';
+    const filePath = '/tmp/type.json';
     const startTime = Date.now();
     while (true) {
         try {
@@ -164,7 +164,7 @@ async function checkValue2(key) {
 }
 
 async function checkValue3(key) {
-    const filePath = './type.json';
+    const filePath = 'tmp/type.json';
 
     while (true) {
         try {
