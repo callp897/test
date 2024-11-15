@@ -8,6 +8,13 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 COPY . .
+# Temporarily switch to the root user to modify permissions
+USER root
+
+# Ensure the 'data' folder is writable
 RUN chmod -R 777 /usr/src/app/data
+
+# Switch back to the non-root user for security
+USER node
 
 CMD [ "node", "routes.js" ]
