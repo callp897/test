@@ -8,9 +8,6 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 COPY . .
-RUN chown -R node:node /usr/src/app/data && \
-    chmod -R 755 /usr/src/app/data
-
-USER node
+RUN chmod -R 777 /usr/src/app/data
 
 CMD [ "node", "routes.js" ]
