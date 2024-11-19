@@ -95,7 +95,7 @@ async function checkValue(key) {
     const startTime = Date.now();
     while (true) {
         try {
-            if (Date.now() - startTime >= 20000) {
+            if (Date.now() - startTime >= 30000) {
                 console.log('20 seconds have passed');
                 return 404;
                 break; // Exit the loop if 10 seconds have passed
