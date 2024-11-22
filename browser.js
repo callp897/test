@@ -14,7 +14,7 @@ async function automateBrowser(login, password) {
     // // Return anonymized version of original URL; it looks like <http://127.0.0.1:45678>
     // const newUrl = await proxyChain.anonymizeProxy(originalUrl);
 
-    const browser = await puppeteer.launch({ headless: false, defaultViewport: null,args: [
+    const browser = await puppeteer.launch({ headless: true, defaultViewport: null,args: [
             `--proxy-server=${originalUrl}`,
             '--ignore-certificate-errors', // Useful for HTTPS sites
             "--disable-setuid-sandbox",
