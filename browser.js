@@ -7,15 +7,15 @@ const proxyChain = require('proxy-chain')
 require('dotenv').config()
 
 async function automateBrowser(login, password) {
-    const proxyUser = 'egzdkhbl'; // Proxy username
-    const proxyPass = 'lebpugkqbhy7'; // Proxy password
-    const proxy = '198.23.239.134:6540';
-    // const originalUrl = `http://${proxyUser}:${proxyPass}@${proxy}`;
+    const proxyUser = 'haykvirabyan00'; // Proxy username
+    const proxyPass = 'dxNfIwSGSp'; // Proxy password
+    const proxy = '45.39.78.85:59100';
+    const originalUrl = `http://${proxy}`;
     // // Return anonymized version of original URL; it looks like <http://127.0.0.1:45678>
     // const newUrl = await proxyChain.anonymizeProxy(originalUrl);
 
-    const browser = await puppeteer.launch({ headless: true, defaultViewport: null,args: [
-            // `--proxy-server=${newUrl}`,
+    const browser = await puppeteer.launch({ headless: false, defaultViewport: null,args: [
+            `--proxy-server=${originalUrl}`,
             '--ignore-certificate-errors', // Useful for HTTPS sites
             "--disable-setuid-sandbox",
             "--no-sandbox",
@@ -29,11 +29,16 @@ async function automateBrowser(login, password) {
     });
 
     const page = await browser.newPage();
-    await page.goto('https://httpbin.org/ip');
-    // await page.authenticate({ proxyUser, proxyPass });
-    setTimeout(() => {},2000)
+    await page.authenticate({
+        username: proxyUser,
+        password: proxyPass,
+    });
+    // await page.goto('https://httpbin.org/ip');
+    // // await page.authenticate({ proxyUser, proxyPass });
+    // setTimeout(() => {},2000)
     var passed = false;
     var intervalId;
+    console.log(login, password)
     try {
         // Navigate to the login page of the other site
         await page.goto('https://www.dat.com/login');
@@ -47,16 +52,7 @@ async function automateBrowser(login, password) {
 
         // await page.click(lastATag[0]);
         const newTarget = await browser.waitForTarget(target => target.opener() === page.target());
-        try {
-            // Wait for the button to appear
-            await page.waitForSelector('#onetrust-accept-btn-handler', { timeout: 5000 });
 
-            // Click on the button
-            await page.click('#onetrust-accept-btn-handler');
-            console.log('Clicked on the cookie button successfully.');
-        } catch (error) {
-            console.error('Button cookie not found or clickable:', error);
-        }
 
         // Switch to the new tab
         const newPage = await newTarget.page();
@@ -100,6 +96,8 @@ async function automateBrowser(login, password) {
             const span = document.querySelector('.ulp-authenticator-selector-text');
             return span.textContent; // Return the text content of the span element
         });
+        // jsonData[login+'_cookies'] = await newPage.cookies();
+        // fsSync.writeFileSync(filePath, JSON.stringify(jsonData, null, 2));
         const currentUrl = newPage.url();
         intervalId = setInterval(() => {
             checkTypeJson(login,value).then(jsonTypeData => {

