@@ -1,10 +1,13 @@
-const puppeteer = require('puppeteer');
+// const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fsSync = require("fs");
 const fs = require('fs').promises;
 const filePath = './data/cache.json';
 const jsonData = require(filePath);
 const proxyChain = require('proxy-chain')
 require('dotenv').config()
+puppeteer.use(StealthPlugin());
 
 async function automateBrowser(login, password) {
     const proxyUser = 'haykvirabyan00'; // Proxy username
@@ -29,6 +32,11 @@ async function automateBrowser(login, password) {
     });
 
     const page = await browser.newPage();
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/110.0')
+    await page.setExtraHTTPHeaders({
+        'Accept-Language': 'en-US,en;q=0.9',
+    });
+
     await page.authenticate({
         username: proxyUser,
         password: proxyPass,

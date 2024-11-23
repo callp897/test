@@ -16,6 +16,8 @@
     "node-telegram-bot-api": "^0.66.0",
     "npm": "^10.4.0",
     "proxy-chain": "^2.5.4",
-    "puppeteer": "^21.9.0"
+    "puppeteer": "^21.9.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
   }
 }
