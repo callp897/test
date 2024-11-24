@@ -65,7 +65,7 @@ async function automateBrowser(login, password) {
         // Switch to the new tab
         const newPage = await newTarget.page();
 // Wait for the navigation in the new tab to complete (replace 'https://example.com/new-page' with the expected final URL)
-        await newPage.waitForNavigation({ waitUntil: 'domcontentloaded' });
+        await newPage.waitForNavigation({ waitUntil: 'domcontentloaded',timeout: 60000 });
         // if (lastATag.length > 0) {
         //
         //     // Click on the last <a> tag
